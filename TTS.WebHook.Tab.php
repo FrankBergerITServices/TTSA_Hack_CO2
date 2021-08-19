@@ -49,10 +49,10 @@ $uplink_message = $json['uplink_message'];
 // Daily log of all uplinks
 $file = date('Ymd').".txt";
 
-$output = "$received_at\t$application_id\t$device_id\t$f_cnt\t$f_port\t$frm_payload\t$data_rate_index\t$consumed_airtime\t$rssi\t$snr\t$temperature\n";
+$output = "$received_at\t$application_id\t$device_id\t$f_cnt\t$f_port\t$frm_payload\t$data_rate_index\t$consumed_airtime\t$rssi\t$snr\t$co2\t$temperature\t$humidity\n";
 
 if (!file_exists($file)) {	// Put column headers at top of file
-	file_put_contents($file, "received_at\tapplication_id\tdevice_id\tf_cnt\tf_port\tfrm_payload\tdata_rate_index\tconsumed_airtime\trssi\tsnr\n");
+	file_put_contents($file, "received_at\tapplication_id\tdevice_id\tf_cnt\tf_port\tfrm_payload\tdata_rate_index\tconsumed_airtime\trssi\tsnr\tco2\ttemperature\thumidity\n");
 }
 
 file_put_contents($file, $output, FILE_APPEND | LOCK_EX);
@@ -61,10 +61,10 @@ file_put_contents($file, $output, FILE_APPEND | LOCK_EX);
 // Application log
 $file = $application_id.".txt";
 
-$output = "$received_at\t$device_id\t$f_cnt\t$f_port\t$frm_payload\t$data_rate_index\t$consumed_airtime\t$rssi\t$snr\n";
+$output = "$received_at\t$device_id\t$f_cnt\t$f_port\t$frm_payload\t$data_rate_index\t$consumed_airtime\t$rssi\t$snr\t$co2\t$temperature\t$humidity\n";
 
 if (!file_exists($file)) {	// Put column headers at top of file
-	file_put_contents($file, "received_at\tdevice_id\tf_cnt\tf_port\tfrm_payload\tdata_rate_index\tconsumed_airtime\trssi\tsnr\n");
+	file_put_contents($file, "received_at\tdevice_id\tf_cnt\tf_port\tfrm_payload\tdata_rate_index\tconsumed_airtime\trssi\tsnr\tco2\ttemperature\thumidity\n");
 }
 
 file_put_contents($file, $output, FILE_APPEND | LOCK_EX);
@@ -73,10 +73,10 @@ file_put_contents($file, $output, FILE_APPEND | LOCK_EX);
 // Device log
 $file = $application_id."__".$device_id.".txt";
 
-$output = "$received_at\t$f_cnt\t$f_port\t$frm_payload\t$data_rate_index\t$consumed_airtime\t$rssi\t$snr\n";
+$output = "$received_at\t$f_cnt\t$f_port\t$frm_payload\t$data_rate_index\t$consumed_airtime\t$rssi\t$snr\t$co2\t$temperature\t$humidity\n";
 
 if (!file_exists($file)) {	// Put column headers at top of file
-	file_put_contents($file, "received_at\tf_cnt\tf_port\tfrm_payload\tdata_rate_index\tconsumed_airtime\trssi\tsnr\n");
+	file_put_contents($file, "received_at\tf_cnt\tf_port\tfrm_payload\tdata_rate_index\tconsumed_airtime\trssi\tsnr\tco2\ttemperature\thumidity\n");
 }
 
 file_put_contents($file, $output, FILE_APPEND | LOCK_EX);

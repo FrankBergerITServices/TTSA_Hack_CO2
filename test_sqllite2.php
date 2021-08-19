@@ -1,11 +1,14 @@
 <?php
 
-$db = new SQLite3('test.db');
+$db = new SQLite3('measurements.db');
 
-$res = $db->query('SELECT * FROM cars');
+$res = $db->query('SELECT * FROM measurements');
 
 while ($row = $res->fetchArray()) {
-    echo "{$row['id']} {$row['name']} {$row['price']} \n";
+
+    $jsonArray[] = $row;
 }
+
+echo json_encode($jsonArray)
 
 ?>

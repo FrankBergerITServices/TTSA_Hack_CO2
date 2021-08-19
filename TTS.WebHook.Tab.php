@@ -1,8 +1,18 @@
 <?php
 
-$ver  = "2021-05-26 v1.5";
+$ver  = "2021-08-19 v0.1";
 
 ini_set("error_reporting", E_ALL);
+
+$db = new SQLite3('measurements.db');
+$db-> exec("CREATE TABLE IF NOT EXISTS measurements(
+              id          INTEGER PRIMARY KEY AUTOINCREMENT,
+              device_id   VARCHAR(30),
+              received_at VARCHAR(35), 	
+			  co2         INTEGER,
+			  temperature REAL,
+              humidity    REAL)");
+
 
 // Get the incoming information from the raw input
 $data = file_get_contents("php://input");
@@ -40,6 +50,15 @@ $uplink_message = $json['uplink_message'];
 	$co2 = $decoded_payload['co2'];
     $temperature = $decoded_payload['temperature'];
 	$humidity = $decoded_payload['humidity'];
+
+$stmt = $db->prepare("INSERT INTO measurements(device_id, received_at, co2, temperature, humidity) 
+                        VALUES(:device_id, :received_at, :co2, :temperature, :humidity)");
+$stmt->bindParam(':device_id', $device_id);
+$stmt->bindParam(':received_at', $received_at);
+$stmt->bindParam(':co2', $co2);
+$stmt->bindParam(':temperature', $temperature);
+$stmt->bindParam(':humidity', $humidity);
+$stmt->execute();
 
 // NOTE: Adding to the text files assumes that the server does not get two incoming
 // requests at the exact same time, which for a handful of nodes is quite unlikely

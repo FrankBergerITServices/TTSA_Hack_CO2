@@ -6,6 +6,7 @@
 <link rel='stylesheet' href='https://unpkg.com/purecss@2.0.3/build/grids-responsive-min.css'>
 <script src='https://cdn.plot.ly/plotly-basic-1.58.2.min.js'></script>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
+<meta http-equiv="refresh" content="30" />
 </head>
 <body>
 <div class='pure-g'><div class='pure-u-1'><div class='pure-menu'><p class='pure-menu-heading'>The Things Summer Academy Hackathon CO<sub>2</sub> Project</p></div></div>
@@ -64,14 +65,13 @@ var get_data_url;
 fetch(get_data_url,{credentials:'include'})
 .then(response=>response.text())
 .then(csvText=>csvToTable(csvText))
-.then(htmlTable=>addLogTableToPage(htmlTable))
 .then(_=>Plotly.newPlot('graph',data,layout,{displaylogo:false}))
 .catch(e=>console.error(e));
 xs=[];
 data=[{x:xs,y:[],type:'scatter',name:'CO<sub>2</sub>',line:{color:'#2ca02c'}},
 {x:xs,y:[],type:'scatter',name:'Temperature',yaxis:'y2',line:{color:'#ff7f0e',dash:'dot'}},
 {x:xs,y:[],type:'scatter',name:'Humidity',yaxis:'y3',line:{color:'#1f77b4',dash:'dot'}}];
-layout={height:600,title:'ESP2ced1c',legend:{xanchor:'right',x:0.2,y:1.0},
+layout={height:600,title:device_id,legend:{xanchor:'right',x:0.2,y:1.0},
 xaxis:{domain:[0.0,0.85]},yaxis:{ticksuffix:'ppm',range:[0,2000],dtick:200},
 yaxis2:{overlaying:'y',side:'right',ticksuffix:'°C',position:0.9,anchor:'free',range:[0,30],dtick:3},
 yaxis3:{overlaying:'y',side:'right',ticksuffix:'%',position:0.95,anchor:'free',range:[0,100],dtick:10}
@@ -102,7 +102,9 @@ cell.appendChild(document.createTextNode(field));
 row.appendChild(cell);});
 table.appendChild(row);});
 return table;}
+
 function addLogTableToPage(table){document.getElementById('log').appendChild(table);}
+
 </script>
 </body>
 </html>

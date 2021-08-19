@@ -17,8 +17,9 @@
 <li class='pure-menu-item' id='led'>&#11044;</li>
 </ul></div></div>
 
-    <form name='testform' method='POST' action='mainck.php'>
-      <select name='cat' onchange='AjaxFunction(this);'>
+
+    <form name='testform' method='POST'>
+      <select id="device_id_select" name='cat' onChange="updateDeviceId()">
 
 <?php
   $db = new SQLite3('measurements.db');
@@ -29,11 +30,17 @@
   }
 ?>
       </select>
-       <input type='submit' value='Submit'>
+	  
+  
     </form>
+	
 
 
 <script>
+
+
+
+
 hue=(1-(Math.min(Math.max(parseInt(document.title),500),1600)-500)/1100)*120;
 document.getElementById('led').style.color=['hsl(',hue,',100%,50%)'].join('');
 </script>
@@ -81,7 +88,21 @@ document.getElementById('led').style.color=['hsl(',hue,',100%,50%)'].join('');
 <a href='https://transfer.hft-stuttgart.de/gitlab/co2ampel/ampel-documentation' target='_blank'>Documentation</a>
 <script>
 document.body.style.cursor = 'default';
-fetch('/TT4102138/getData.php',{credentials:'include'})
+
+var device_id;
+var get_data_url;
+
+			function updateDeviceId() {
+				var select = document.getElementById('device_id_select');
+                device_id = select.options[select.selectedIndex].value;
+				
+				get_data_url = '/TT4102138/getData.php?device_id='+ device_id;
+				
+                console.log(device_id);
+				
+				console.log(get_data_url);
+
+fetch(get_data_url,{credentials:'include'})
 .then(response=>response.text())
 .then(csvText=>csvToTable(csvText))
 .then(htmlTable=>addLogTableToPage(htmlTable))
@@ -96,6 +117,12 @@ xaxis:{domain:[0.0,0.85]},yaxis:{ticksuffix:'ppm',range:[0,2000],dtick:200},
 yaxis2:{overlaying:'y',side:'right',ticksuffix:'°C',position:0.9,anchor:'free',range:[0,30],dtick:3},
 yaxis3:{overlaying:'y',side:'right',ticksuffix:'%',position:0.95,anchor:'free',range:[0,100],dtick:10}
 };
+
+			}
+
+			updateDeviceId();
+
+
 function csvToTable(csvText) {
 csvText=csvText.trim();
 lines=csvText.split('\n');

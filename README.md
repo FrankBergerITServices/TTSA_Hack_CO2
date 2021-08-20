@@ -7,7 +7,7 @@ We made a solution to bring measurements in from different CO2 sensors around th
 ![](./images/diagram.png)
 
 ## Screenshot of dashboard
-[ReadSensors-LoRaWAN](https://eu1.ttsa.descartes.net/TT4102138/SensorDashBoard.php)
+[Dashboard](https://eu1.ttsa.descartes.net/TT4102138/SensorDashBoard.php)
 ![](./images/screenshot.png)
 
 ## Hardware used

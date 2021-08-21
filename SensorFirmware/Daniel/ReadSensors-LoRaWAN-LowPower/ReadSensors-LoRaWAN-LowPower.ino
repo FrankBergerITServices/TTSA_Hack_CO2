@@ -95,5 +95,5 @@ void loop() {
   sendSensorValues();
 
   // wait 1 second to print again
-  delay(120000);
+  delay(300000);
 }
